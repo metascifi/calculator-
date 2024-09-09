@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+@font-face {
+    font-family: "digital-italic";
+    src: url(fonts/digital-italic.ttf);
+}
 
 body {
     display: flex;
@@ -31,14 +35,19 @@ body {
 #display {
     background-color: black;
     color: rgb(83, 234, 83);
-    padding: 20px;
-    font-size: 35px;
     border-radius: 15px;
+    padding: 20px;
+}
+
+#display p {
+    font-family: "digital-italic", monospace;
+    font-size: 35px;
+    height: 25px;
 }
 
 #button-panel {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
 }
 
 #numbers-panel, #operations-panel {

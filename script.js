@@ -1,32 +1,63 @@
-let firstNum = 0;
+let firstNum = "";
 let operator = "";
-let secondNum = 0; 
-
-function add (a, b){
-    return +a + +b;
-}
-
-function subtract(a, b) {
-    return +a - +b; 
-}
-
-function multiply(a, b) {
-    return +a * +b;
-}
-
-function divide (a, b){
-    return +a - +b;
-}
+let secondNum = ""; 
+const displayText = document.querySelector("#display p")
+displayText.textContent = "0";
+const numberPanel = document.querySelector("#numbers-panel");
+const operationsPanel = document.querySelector("#operations-panel")
 
 function operate (num1, num2, operator) {
     switch (operator) {
-        case "add":
-          return add(num1, num2);
-        case "subtract": 
-            return subtract(num1, num2);
-        case "multiply":
-            return multiply(num1, num2);
-        case "divide":
-            return divide(num1, num2)
+        case "+":
+          return +num1 + +num2;
+        case "-": 
+            return +num1 - +num2;
+        case "x":
+            return +num1 * +num2;
+        case "÷":
+            return +num1 / +num2
     }
 }
+
+numberPanel.addEventListener('click', (event) => {
+    if (operator === "") {
+        if (displayText.textContent === "0") {
+            firstNum += event.target.textContent;
+            displayText.textContent = firstNum; 
+        } else {
+            firstNum += event.target.textContent;
+            displayText.textContent = firstNum; 
+            console.log(firstNum, secondNum);
+        };
+    } else {
+        if (displayText.textContent === "") {
+            secondNum = event.target.textContent;
+            displayText.textContent = secondNum;
+        } else {
+            secondNum += event.target.textContent;
+            displayText.textContent = secondNum;
+        };
+        console.log(firstNum, secondNum)
+    } 
+})
+
+operationsPanel.addEventListener('click', (event) => {
+    switch (event.target.textContent){
+        case "÷":
+        case "x":
+        case "+":
+        case "-":
+            operator = event.target.textContent;
+            break;
+        case "C": 
+            firstNum = ""
+            operator = ""
+            secondNum = ""
+            displayText.textContent = "0";
+            break;
+        case "=": 
+            firstNum = operate(firstNum, secondNum, operator);
+            displayText.textContent = firstNum;
+            secondNum = "";        
+    }
+})
