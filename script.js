@@ -20,7 +20,9 @@ function operate (num1, num2, operator) {
 }
 
 numberPanel.addEventListener('click', (event) => {
+    if (event.target.id === "numbers-panel") return "";
     if (operator === "") {
+        console.log(event.target);
         if (displayText.textContent === "0") {
             firstNum += event.target.textContent;
             displayText.textContent = firstNum; 
@@ -58,6 +60,7 @@ operationsPanel.addEventListener('click', (event) => {
         case "=": 
             firstNum = operate(firstNum, secondNum, operator);
             displayText.textContent = firstNum;
-            secondNum = "";        
+            secondNum = ""; 
+            operator = "";       
     }
 })

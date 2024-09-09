@@ -17,7 +17,7 @@ body {
 }
 
 #calculator-body {
-    max-width: 320px;
+    max-width: 325px;
     display: flex;
     background-color: bisque;
     padding: 10px;
@@ -47,13 +47,14 @@ body {
 
 #button-panel {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 #numbers-panel, #operations-panel {
     display: flex;
     flex-wrap: wrap;
     gap: 2px;
+    align-content: flex-start;
 }
 
 #numbers-panel button , #operations-panel button{
