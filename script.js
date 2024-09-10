@@ -9,12 +9,16 @@ const operationsPanel = document.querySelector("#operations-panel")
 function operate (num1, num2, operator) {
     switch (operator) {
         case "+":
+          firstNum = parseInt(num1) + parseInt(num2);
           return +num1 + +num2;
         case "-": 
+            firstNum = +num1 - +num2;
             return +num1 - +num2;
         case "x":
+            firstNum = +num1 * +num2;
             return +num1 * +num2;
         case "÷":
+            firstNum = +num1 / +num2;
             return +num1 / +num2
     }
 }
@@ -49,7 +53,16 @@ operationsPanel.addEventListener('click', (event) => {
         case "x":
         case "+":
         case "-":
-            operator = event.target.textContent;
+            if (operator === "") {
+                operator = event.target.textContent;
+            } 
+            console.log(operator);
+            if (secondNum !== "") {                
+                firstNum = operate(firstNum, secondNum, operator);
+                displayText.textContent = firstNum;
+                secondNum = "";
+                operator = event.target.textContent;
+            };
             break;
         case "C": 
             firstNum = ""
@@ -64,3 +77,8 @@ operationsPanel.addEventListener('click', (event) => {
             operator = "";       
     }
 })
+
+
+// 78 + 78 /
+
+// cначала прога має використати попердній оператор, а потім присвоїти новий!!!
