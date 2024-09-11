@@ -120,5 +120,20 @@ operationsPanel.addEventListener('click', (event) => {
             if (firstNum === "") {
                 displayText.textContent = "0";
             } 
+            break;
+        case "→":
+            if (secondNum === ""){
+                let array = String(firstNum).split("");
+                array.pop();
+                firstNum = array.join("");
+                if (firstNum === "") firstNum = "0";  
+                displayText.textContent = firstNum;
+            } else {
+                let array = String(secondNum).split("");
+                array.pop();
+                secondNum = array.join("");
+                if (secondNum === "") secondNum = "0";  
+                displayText.textContent = secondNum;
+            }
     }
 })
