@@ -14,9 +14,11 @@ function operate (num1, num2, operator) {
         case "-": 
             firstNum = +num1 - +num2;
             return +firstNum.toFixed(1); 
+        case "*":
         case "x":
             firstNum = +num1 * +num2;
             return +firstNum.toFixed(1); 
+        case "/":
         case "÷":
             firstNum = +num1 / +num2;
             return +firstNum.toFixed(1);
@@ -59,6 +61,57 @@ numberPanel.addEventListener('click', (event) => {
             displayText.textContent = secondNum;
         } else {
             secondNum += event.target.textContent;
+            if (secondNum.slice().split("").filter((item) => {
+                if (item === ".") {
+                    return true;
+                } 
+                return false;
+            }).length > 1) {
+               let array = secondNum.split("");
+               array.pop();
+               secondNum = array.join("");
+            };
+            if (secondNum === ".") return "";
+            displayText.textContent = secondNum;
+        };
+        console.log(firstNum, secondNum)
+    } 
+})
+
+document.addEventListener('keydown', (event) => {
+    console.log(event.key);
+    if (!"0123456789.".includes(event.key)) return "";
+    if (operator === "") {
+        if (displayText.textContent === "0") {
+            firstNum = event.key;
+            if (firstNum === ".") return "";
+            displayText.textContent = firstNum; 
+        } else {
+            if (firstNum === "0") {
+               firstNum = event.key;
+            } else {
+                firstNum += event.key;
+                // deletes more than one decimal point
+                if (firstNum.slice().split("").filter((item) => {
+                    if (item === ".") {
+                        return true;
+                    } 
+                    return false;
+                }).length > 1) {
+                   let array = firstNum.split("");
+                   array.pop();
+                   firstNum = array.join("");
+                }
+                displayText.textContent = firstNum; 
+                // console.log(firstNum, secondNum);
+            };   
+        };
+    } else {
+        if (displayText.textContent === "" || secondNum === "0") {
+            secondNum = event.key;
+            displayText.textContent = secondNum;
+        } else {
+            secondNum += event.key;
             if (secondNum.slice().split("").filter((item) => {
                 if (item === ".") {
                     return true;
@@ -122,6 +175,69 @@ operationsPanel.addEventListener('click', (event) => {
             } 
             break;
         case "→":
+            if (secondNum === ""){
+                let array = String(firstNum).split("");
+                array.pop();
+                firstNum = array.join("");
+                if (firstNum === "") firstNum = "0";  
+                displayText.textContent = firstNum;
+            } else {
+                let array = String(secondNum).split("");
+                array.pop();
+                secondNum = array.join("");
+                if (secondNum === "") secondNum = "0";  
+                displayText.textContent = secondNum;
+            }
+    }
+})
+
+document.addEventListener("keydown", (event) => {
+    switch (event.key){
+        case "/":
+        case "*":
+        case "+":
+        case "-":
+            if (operator === "") {
+                operator = event.key;
+            } 
+            console.log(operator);
+            if (secondNum !== "") {
+                firstNum = operate(firstNum, secondNum, operator);
+                if (String(firstNum).includes(".0")) {
+                    firstNum = Math.floor(firstNum);
+                }
+                console.log(typeof firstNum);
+                if (firstNum === Infinity){
+                    firstNum = "";
+                    displayText.textContent = "NO WAY!";
+                    operator = "";
+                } else {
+                    displayText.textContent = firstNum;
+                    operator = event.key;
+                }
+                secondNum = "";
+            };
+            break;
+        case "Delete": 
+            firstNum = ""
+            operator = ""
+            secondNum = ""
+            displayText.textContent = "0";
+            break;
+        case "=":    
+        case "Enter": 
+            firstNum = operate(firstNum, secondNum, operator);
+            if (String(firstNum).includes(".0")) {
+                firstNum = Math.floor(firstNum);
+            }
+            displayText.textContent = firstNum;
+            secondNum = ""; 
+            operator = "";  
+            if (firstNum === "") {
+                displayText.textContent = "0";
+            } 
+            break;
+        case "Backspace":
             if (secondNum === ""){
                 let array = String(firstNum).split("");
                 array.pop();
