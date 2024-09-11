@@ -9,17 +9,19 @@ const operationsPanel = document.querySelector("#operations-panel")
 function operate (num1, num2, operator) {
     switch (operator) {
         case "+":
-          firstNum = parseInt(num1) + parseInt(num2);
-          return +num1 + +num2;
+            firstNum = Number(num1) + Number(num2);
+            return +firstNum.toFixed(1); 
         case "-": 
             firstNum = +num1 - +num2;
-            return +num1 - +num2;
+            return +firstNum.toFixed(1); 
         case "x":
             firstNum = +num1 * +num2;
-            return +num1 * +num2;
+            return +firstNum.toFixed(1); 
         case "÷":
             firstNum = +num1 / +num2;
-            return +num1 / +num2
+            return +firstNum.toFixed(1);
+        default:
+            return firstNum = "";
     }
 }
 
@@ -28,19 +30,46 @@ numberPanel.addEventListener('click', (event) => {
     if (operator === "") {
         console.log(event.target);
         if (displayText.textContent === "0") {
-            firstNum += event.target.textContent;
+            firstNum = event.target.textContent;
+            if (firstNum === ".") return "";
             displayText.textContent = firstNum; 
         } else {
-            firstNum += event.target.textContent;
-            displayText.textContent = firstNum; 
-            console.log(firstNum, secondNum);
+            if (firstNum === "0") {
+               firstNum = event.target.textContent;
+            } else {
+                firstNum += event.target.textContent;
+                // deletes more than one decimal point
+                if (firstNum.slice().split("").filter((item) => {
+                    if (item === ".") {
+                        return true;
+                    } 
+                    return false;
+                }).length > 1) {
+                   let array = firstNum.split("");
+                   array.pop();
+                   firstNum = array.join("");
+                }
+                displayText.textContent = firstNum; 
+                console.log(firstNum, secondNum);
+            };   
         };
     } else {
-        if (displayText.textContent === "") {
+        if (displayText.textContent === "" || secondNum === "0") {
             secondNum = event.target.textContent;
             displayText.textContent = secondNum;
         } else {
             secondNum += event.target.textContent;
+            if (secondNum.slice().split("").filter((item) => {
+                if (item === ".") {
+                    return true;
+                } 
+                return false;
+            }).length > 1) {
+               let array = secondNum.split("");
+               array.pop();
+               secondNum = array.join("");
+            };
+            if (secondNum === ".") return "";
             displayText.textContent = secondNum;
         };
         console.log(firstNum, secondNum)
@@ -57,11 +86,21 @@ operationsPanel.addEventListener('click', (event) => {
                 operator = event.target.textContent;
             } 
             console.log(operator);
-            if (secondNum !== "") {                
+            if (secondNum !== "") {               
                 firstNum = operate(firstNum, secondNum, operator);
-                displayText.textContent = firstNum;
+                if (String(firstNum).includes(".0")) {
+                    firstNum = Math.floor(firstNum);
+                }
+                console.log(typeof firstNum);
+                if (firstNum === Infinity){
+                    firstNum = "";
+                    displayText.textContent = "NO WAY!";
+                    operator = "";
+                } else {
+                    displayText.textContent = firstNum;
+                    operator = event.target.textContent;
+                }
                 secondNum = "";
-                operator = event.target.textContent;
             };
             break;
         case "C": 
@@ -72,13 +111,14 @@ operationsPanel.addEventListener('click', (event) => {
             break;
         case "=": 
             firstNum = operate(firstNum, secondNum, operator);
+            if (String(firstNum).includes(".0")) {
+                firstNum = Math.floor(firstNum);
+            }
             displayText.textContent = firstNum;
             secondNum = ""; 
-            operator = "";       
+            operator = "";  
+            if (firstNum === "") {
+                displayText.textContent = "0";
+            } 
     }
 })
-
-
-// 78 + 78 /
-
-// cначала прога має використати попердній оператор, а потім присвоїти новий!!!
