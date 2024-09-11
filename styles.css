@@ -14,14 +14,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 500px;
+    background-color: blue;
 }
 
 #calculator-body {
     max-width: 320px;
     display: flex;
-    background-color: bisque;
+    background-color: rgb(65, 176, 228);
     padding: 10px;
-    border: 10px solid rgb(240, 255, 196);
+    border: 10px solid rgb(255, 255, 255);
     border-radius: 6px;
 }
 
@@ -72,7 +73,7 @@ body {
 }
 
 #numbers-panel button {
-    background-color: rgb(255, 239, 121);
+    background-color: rgb(255, 255, 255);
     font-size: 20px;
     font-weight: 800;
 }
