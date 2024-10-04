@@ -58,7 +58,7 @@ numberPanel.addEventListener('click', (event) => {
     } else {
         if (displayText.textContent === "" || secondNum === "0") {
             secondNum = event.target.textContent;
-            displayText.textContent = secondNum;
+            displayText.textContent += secondNum;
         } else {
             secondNum += event.target.textContent;
             if (secondNum.slice().split("").filter((item) => {
@@ -72,7 +72,7 @@ numberPanel.addEventListener('click', (event) => {
                secondNum = array.join("");
             };
             if (secondNum === ".") return "";
-            displayText.textContent = secondNum;
+            displayText.textContent += event.target.textContent;
         };
         console.log(firstNum, secondNum)
     } 
@@ -109,7 +109,7 @@ document.addEventListener('keydown', (event) => {
     } else {
         if (displayText.textContent === "" || secondNum === "0") {
             secondNum = event.key;
-            displayText.textContent = secondNum;
+            displayText.textContent += secondNum;
         } else {
             secondNum += event.key;
             if (secondNum.slice().split("").filter((item) => {
@@ -123,7 +123,7 @@ document.addEventListener('keydown', (event) => {
                secondNum = array.join("");
             };
             if (secondNum === ".") return "";
-            displayText.textContent = secondNum;
+            displayText.textContent += event.key;
         };
         console.log(firstNum, secondNum)
     } 
@@ -136,7 +136,12 @@ operationsPanel.addEventListener('click', (event) => {
         case "+":
         case "-":
             if (operator === "") {
-                operator = event.target.textContent;
+                if (event.target.textContent === "x") {
+                   operator = "*"
+                } else {
+                    operator = event.target.textContent;
+                }
+                displayText.textContent += operator;
             } 
             console.log(operator);
             if (secondNum !== "") {               
@@ -152,6 +157,7 @@ operationsPanel.addEventListener('click', (event) => {
                 } else {
                     displayText.textContent = firstNum;
                     operator = event.target.textContent;
+                    displayText.textContent += operator;
                 }
                 secondNum = "";
             };
@@ -167,12 +173,16 @@ operationsPanel.addEventListener('click', (event) => {
             if (String(firstNum).includes(".0")) {
                 firstNum = Math.floor(firstNum);
             }
-            displayText.textContent = firstNum;
             secondNum = ""; 
-            operator = "";  
+            operator = ""; 
+            if (firstNum === "" && displayText.textContent !== ""){
+                firstNum = displayText.textContent;
+                break;
+            }
+            displayText.textContent = firstNum;
             if (firstNum === "") {
                 displayText.textContent = "0";
-            } 
+            }
             break;
         case "→":
             if (secondNum === ""){
@@ -199,6 +209,7 @@ document.addEventListener("keydown", (event) => {
         case "-":
             if (operator === "") {
                 operator = event.key;
+                displayText.textContent += operator;
             } 
             console.log(operator);
             if (secondNum !== "") {
@@ -214,6 +225,7 @@ document.addEventListener("keydown", (event) => {
                 } else {
                     displayText.textContent = firstNum;
                     operator = event.key;
+                    displayText.textContent += operator;
                 }
                 secondNum = "";
             };
@@ -230,9 +242,13 @@ document.addEventListener("keydown", (event) => {
             if (String(firstNum).includes(".0")) {
                 firstNum = Math.floor(firstNum);
             }
-            displayText.textContent = firstNum;
             secondNum = ""; 
-            operator = "";  
+            operator = "";
+            if (firstNum === "" && displayText.textContent !== ""){
+                firstNum = displayText.textContent;
+                break;
+            } 
+            displayText.textContent = firstNum;
             if (firstNum === "") {
                 displayText.textContent = "0";
             } 
